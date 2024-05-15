@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Timer</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+  }
+
+  .container {
+    text-align: center;
+  }
+
+  .heading {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .timer-container {
+    text-align: center;
+    border: 2px solid #333;
+    padding: 30px;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .timer-container:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .timer {
+    font-size: 64px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .button:hover {
+    background-color: #45a049;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="heading">Countdown Timer</div>
+  <div class="timer-container">
+    <div class="timer" id="timer">00:00:00</div>
+    <button class="button" onclick="startTimer()">Start</button>
+    <button class="button" onclick="stopTimer()">Stop</button>
+    <button class="button" onclick="resetTimer()">Reset</button>
+  </div>
+</div>
+
+<script>
+  let timerInterval;
+  let totalSeconds = 0; // Set the initial time in seconds to zero
+  let timerRunning = false;
+
+  function startTimer() {
+    if (!timerRunning) {
+      timerInterval = setInterval(updateTimer, 1000);
+      timerRunning = true;
+    }
+  }
+
+  function stopTimer() {
+    clearInterval(timerInterval);
+    timerRunning = false;
+  }
+
+  function resetTimer() {
+    stopTimer();
+    totalSeconds = 0; // Reset the timer to zero
+    updateTimer();
+  }
+
+  function updateTimer() {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    document.getElementById('timer').innerHTML = 
+      `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    
+    totalSeconds++;
+  }
+
+  updateTimer(); // Initial call to display the initial time
+</script>
+</body>
+</html>
